@@ -2,15 +2,24 @@ package main
 
 import (
 	"encoding/hex"
+	"flag"
 	"fmt"
 	"log"
 	"net"
 )
 
+var p int
+
+func init() {
+	flag.IntVar(&p, "p", 3015, "Port number")
+}
+
 func main() {
+	flag.Parse()
+
 	addr := &net.TCPAddr{
 		IP:   net.ParseIP("127.0.0.1"),
-		Port: 3015,
+		Port: p,
 	}
 	tcp, err := net.DialTCP("tcp", nil, addr)
 	if err != nil {
