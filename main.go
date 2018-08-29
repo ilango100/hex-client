@@ -30,15 +30,11 @@ func main() {
 	var str string
 	for {
 		if _, err := fmt.Scanln(&str); err == nil && str != "" && len(str)%2 == 0 {
-			src := []byte(str)
-			dst := make([]byte, hex.DecodedLen(len(src)))
-			if n, err := hex.Decode(dst, src); err != nil {
+			if dst, err := hex.DecodeString(str); err != nil {
 				fmt.Println(err)
 				continue
-			} else {
-				if _, err := tcp.Write(dst[:n]); err != nil {
-					fmt.Println(err)
-				}
+			} else if _, err := tcp.Write(dst); err != nil {
+				fmt.Println(err)
 			}
 		}
 	}
