@@ -8,20 +8,16 @@ import (
 	"net"
 )
 
-var p int
+var host string
 
 func init() {
-	flag.IntVar(&p, "p", 3015, "Port number")
+	flag.StringVar(&host, "h", "127.0.0.1", "Host string")
 }
 
 func main() {
 	flag.Parse()
 
-	addr := &net.TCPAddr{
-		IP:   net.ParseIP("127.0.0.1"),
-		Port: p,
-	}
-	tcp, err := net.DialTCP("tcp", nil, addr)
+	tcp, err := net.Dial("tcp", host)
 	if err != nil {
 		log.Fatalln(err)
 	}
